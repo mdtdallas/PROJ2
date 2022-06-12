@@ -11,7 +11,7 @@ const logModel = require("./models/logModel");
 const secret_key = process.env.SESSION_TOKEN_SECRET;
 const cookieParser = require('cookie-parser');
 
-server.use(cors({ origin: "*" }));
+server.use(cors({ origin: "https://cat-admin-panel.netlify.app/" }));
 
 // get IPs from the database push to new array
 // let validIps = ["::1"]; // Put your IP whitelist in this array
