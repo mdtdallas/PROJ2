@@ -59,7 +59,7 @@ server.use(
     // resave: true,
     // saveUninitialized: true,
     // cookie: { secure: false },
-  secret: 'a0b5797b8ea54faf763615c6110b4f23aca24ce0d63cac31ed32ca3664ab7719d25ee923f1fcddbfdc67288c08a88a7d44fea3568e6e22219dd5feda14b69e6d',
+  secret: process.env.SESSION_TOKEN_SECRET,
   resave: true,
   saveUninitialized: true,
   key: 'myapp_sid',
