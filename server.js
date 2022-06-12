@@ -53,9 +53,9 @@ server.use(bodyParser.json());
 server.use(
   session({
     secret: secret_key,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
-    cookie: { secure: true },
+    cookie: { secure: false },
   })
 );
 
