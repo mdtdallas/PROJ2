@@ -1,0 +1,78 @@
+CREATE TABLE `users` (
+  `id` INT AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `name` varchar(255),
+  `phone` varchar(255),
+  `userType` varchar(100),
+  `timestamp` DATE DEFAULT(CURRENT_TIMESTAMP),
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `cats` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `breed` varchar(255),
+  `age` varchar(255),
+  `breeder` varchar(255),
+  `userID` INT,
+  `timestamp` DATE DEFAULT(CURRENT_TIMESTAMP),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`userID`) REFERENCES `users`(`id`)
+);
+
+CREATE TABLE `shows` (
+  `id` Type,
+  `title` varchar(255),
+  `image` varchar(255),
+  `location` varchar(255),
+  `judges` varchar(255),
+  `date` DATE,
+  `council` varchar(255),
+  `ticket_price` INT,
+  `ticket_count` INT NOT NULL,
+  `timestamp` DATE DEFAULT(CURRENT_TIMESTAMP),
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `logs` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `IP` varchar(100),
+  `sessionID` varchar(100),
+  `email` varchar(100),
+  `userType` varchar(100),
+  `timestamp` DATE DEFAULT(CURRENT_TIMESTAMP),
+  `action` varchar(100),
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `entrants` (
+  `userID` INT,
+  `showID` INT,
+  `catID` INT,
+  `timestamp` DATETIME NOT NULL DEFAULT(CURRENT_TIMESTAMP),
+  `id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`catID`) REFERENCES `cats`(`id`),
+  FOREIGN KEY (`showID`) REFERENCES `shows`(`id`),
+  FOREIGN KEY (`userID`) REFERENCES `users`(`id`)
+);
+
+CREATE TABLE `iplist` (
+  `id` INT AUTO_INCREMENT,
+  `IP` varchar(100),
+  `email` varchar(100),
+  `access` varchar(50),
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `awards` (
+  `id` INT AUTO_INCREMENT,
+  `title` varchar(100),
+  `year` varchar(5),
+  `catID` INT,
+  `created` varchar(20),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`catID`) REFERENCES `cats`(`id`)
+);
+
