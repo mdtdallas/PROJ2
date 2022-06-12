@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const db = require("./db");
 const logModel = require("./models/logModel");
 const secret_key = process.env.SESSION_TOKEN_SECRET;
+const cookieParser = require('cookie-parser');
 
 server.use(cors({ origin: "*" }));
 
@@ -45,6 +46,8 @@ server.use(cors({ origin: "*" }));
 //   }
 // });
 
+server.use(cookieParser())
+
 server.use(express.static("landing"));
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
@@ -52,10 +55,15 @@ server.use(bodyParser.json());
 
 server.use(
   session({
-    secret: secret_key,
-    resave: true,
-    saveUninitialized: true,
-    cookie: { secure: false },
+    // secret: secret_key,
+    // resave: true,
+    // saveUninitialized: true,
+    // cookie: { secure: false },
+  secret: secret_key,
+  resave: true,
+  saveUninitialized: true,
+  key: 'myapp_sid',
+  cookie: { secure: false }
   })
 );
 
