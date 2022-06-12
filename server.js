@@ -13,37 +13,37 @@ const secret_key = process.env.SESSION_TOKEN_SECRET;
 server.use(cors({ origin: "*" }));
 
 // get IPs from the database push to new array
-let validIps = ["::1"]; // Put your IP whitelist in this array
-function ipgetter() {
-  db.query("SELECT ip FROM iplist"),
-    function (error, results) {
-      if (!results) {
-        return;
-      } else {
-        validIps.push(results);
-      }
-    };
-}
+// let validIps = ["::1"]; // Put your IP whitelist in this array
+// function ipgetter() {
+//   db.query("SELECT ip FROM iplist"),
+//     function (error, results) {
+//       if (!results) {
+//         return;
+//       } else {
+//         validIps.push(results);
+//       }
+//     };
+// }
 
-// // Custom Middleware assuming your using express and express sessions
-server.use((req, res, next) => {
-  ipgetter();
-  if (validIps.includes(req.ip)) {
-    // IP is ok, so go on
-    console.log("IP ok");
-    if (req.ip) {
-      //console.log("Old mate is in!")
-      next();
-    } else {
-      //console.log("Nice try bud")
-      return;
-    }
-  } else {
-    // Invalid ip
-    //console.log("Bad IP: " + req.ip);
-    return;
-  }
-});
+// // // Custom Middleware assuming your using express and express sessions
+// server.use((req, res, next) => {
+//   ipgetter();
+//   if (validIps.includes(req.ip)) {
+//     // IP is ok, so go on
+//     console.log("IP ok");
+//     if (req.ip) {
+//       //console.log("Old mate is in!")
+//       next();
+//     } else {
+//       //console.log("Nice try bud")
+//       return;
+//     }
+//   } else {
+//     // Invalid ip
+//     //console.log("Bad IP: " + req.ip);
+//     return;
+//   }
+// });
 
 server.use(express.static("landing"));
 server.use(express.json());
