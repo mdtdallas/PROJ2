@@ -10,7 +10,7 @@ const db = require("./db");
 const logModel = require("./models/logModel");
 const secret_key = process.env.SESSION_TOKEN_SECRET;
 
-server.use(cors({ origin: "http://localhost:3000" }));
+server.use(cors({ origin: "*" }));
 
 // get IPs from the database push to new array
 let validIps = ["::1"]; // Put your IP whitelist in this array
