@@ -113,9 +113,9 @@ server.use((req, res, next) => {
   }
 });
 
-server.get("/", (req, res) => {
-  res.redirect("index.html");
-});
+// server.get("/", (req, res) => {
+//   res.redirect("index.html");
+// });
 
 // Here is where the server checks all the controllers and sends the request to the
 // correct controller, model and then to the database
