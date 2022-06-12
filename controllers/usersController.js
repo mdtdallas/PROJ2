@@ -7,7 +7,7 @@ const usersModel = require("../models/usersModel");
 const jwt = require("jsonwebtoken");
 const { validateToken } = require("./Auth");
 const logModel = require("../models/logModel");
-const secret = process.env.ACCESS_TOKEN_SECRET;
+const jwt_secret = process.env.JWT_TOKEN_SECRET;
 
 router.get("/users", async (req, res) => {
   const results = await usersModel.getAllUsers();
@@ -31,39 +31,6 @@ router.get("/users/:email", (req, res) => {
       res.status(500).json({ error: "Failed!" });
     });
 });
-
-// router.post("/adminLogin", (req, res) => {
-//   console.log(req.body);
-//   const { email, password } = req.body;
-//   connection.query(
-//     "SELECT * FROM users WHERE email = ?",
-//     [email],
-//     function (err, results) {
-//       if (results.length > 0) {
-//         let user = results[0];
-//         console.log(password, user.password);
-//         if (bcrypt.compareSync(password, user.password)) {
-//           const accessToken = jwt.sign(
-//             {
-//               email: email,
-//               access: user.access,
-//             },
-//             "F75EEAC33F8A01703A5B4B155AC9F4630BCAC8D8E3F51E31D92BA22203C4070F"
-//           );
-//           req.session.user = {
-//             email: user.email,
-//             access: user.access,
-//           };
-//           console.log(req.session.user.email);
-//           return res.json({ message: "Logged In", accessToken: accessToken });
-//         } else {
-//           return res.json({ warning: "Invalid combination" });
-//         }
-//       }
-//       res.json({ error: "User not found" });
-//     }
-//   );
-// });
 
 router.get("/usersName/:name", (req, res) => {
   usersModel
@@ -89,7 +56,6 @@ router.get("/usersPhone/:phone", (req, res) => {
 
 router.post("/users/create", (req, res) => {
   const user = req.body;
-  console.log(req.body);
   if (validator.isEmail(user.email) === false) {
     res.status(406).json({warning: 'Please enter email'});
     return;
@@ -125,7 +91,6 @@ router.post("/users/create", (req, res) => {
 });
 
 router.post("/userUpdate", (req, res) => {
-  console.log(req.body)
   let user = req.body;
   if (validator.isAscii(user.email) === false) {
     res.status(406).json('Please enter email');
@@ -166,7 +131,6 @@ router.delete("/userDelete/:id", (req, res) => {
   usersModel
     .deleteUser(id)
     .then((results) => {
-      console.log(results);
       if (results.affectedRows > 0) {
         res.status(200).json({ status: "User Deleted" });
       } else {
@@ -179,7 +143,6 @@ router.delete("/userDelete/:id", (req, res) => {
 });
 
 router.post("/users/login", (req, res) => {
-  console.log(req.body);
   let login = req.body;
   if (validator.isAscii(login.email) === false) {
     res.status(406).json({ error: "Please enter email" });
@@ -193,8 +156,6 @@ router.post("/users/login", (req, res) => {
   usersModel
     .getUserByEmail(login.email)
     .then((results) => {
-      //if ((results.length = 0)) res.json({ error: "User not found" });
-      console.log(results);
       if (results.length > 0) {
         let user = results[0];
         if (bcrypt.compareSync(login.password, user.password)) {
@@ -208,7 +169,7 @@ router.post("/users/login", (req, res) => {
               email: user.email,
               access: user.userType,
             },
-            "F75EEAC33F8A01703A5B4B155AC9F4630BCAC8D8E3F51E31D92BA22203C4070F"
+            jwt_secret
           );
           logModel.addLog(
             req.ip,

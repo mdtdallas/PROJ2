@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const catsModel = require("../models/catsModel");
 const validator = require("validator");
+const { validateToken } = require("./Auth");
 
 
 
-router.get("/cats", (req, res) => {
+router.get("/cats", validateToken, (req, res) => {
   catsModel
     .getAllcats()
     .then((results) => {
@@ -16,7 +17,7 @@ router.get("/cats", (req, res) => {
     });
 });
 
-router.get("/cat/:id", (req, res) => {
+router.get("/cat/:id", validateToken, (req, res) => {
   let id = req.params.id;
   catsModel
     .getCatsById(id)
@@ -28,7 +29,7 @@ router.get("/cat/:id", (req, res) => {
     });
 });
 
-router.get("/catsEmail/:email", (req, res) => {
+router.get("/catsEmail/:email", validateToken, (req, res) => {
   let email = req.params.email;
   catsModel
     .getCatByEmail(email)
@@ -76,8 +77,7 @@ router.get("/catsBreeder/:breeder", (req, res) => {
     });
 });
 
-router.post("/catCreate/create", (req, res) => {
-  console.log(req.body)
+router.post("/catCreate/create", validateToken, (req, res) => {
   let cat = req.body;
   let dateTimeNow = new Date().toISOString();
   if (validator.isAscii(cat.name) === false) {
@@ -110,8 +110,7 @@ router.post("/catCreate/create", (req, res) => {
     });
 });
 
-router.patch("/catUpdate/update", (req, res) => {
-  console.log(req.body);
+router.patch("/catUpdate/update", validateToken, (req, res) => {
   let cat = req.body;
   if (validator.isAscii(cat.name) === false) {
     res.status(406).json({warning: "Please enter cat name"});
@@ -138,7 +137,6 @@ router.patch("/catUpdate/update", (req, res) => {
       validator.escape(cat.id)
     )
     .then((results) => {
-      console.log(results);
       if (results.affectedRows > 0) {
         res.status(202).json({ status: `Cat ${cat.name} has been updated` });
       } else {
@@ -150,8 +148,8 @@ router.patch("/catUpdate/update", (req, res) => {
     });
 });
 
-router.delete("/catDelete/delete", (req, res) => {
-  let id = req.body.id;
+router.delete("/catDelete/delete/:id", validateToken, (req, res) => {
+  let id = req.params.id;
   catsModel
     .deleteCat(id)
     .then((results) => {

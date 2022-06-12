@@ -5,7 +5,6 @@ module.exports.getAllLogs = () => {
 }
 
 module.exports.addLog = (IP, sessionID, action, url, email, userType) => {
-    console.log(IP, sessionID, action, url, email, userType)
     return db.query('INSERT INTO logs (IP, sessionID, action, url, email, userType)'+'VALUES (?, ?, ?, ?, ?, ?)', [IP, sessionID, action, url, email, userType])
 }
 

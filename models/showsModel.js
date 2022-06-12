@@ -25,7 +25,6 @@ module.exports.createShow = (title, location, photo, judges, date, council, tick
 }
 
 module.exports.updateShow = (title, location, image, judges, date, council, ticket_price, ticket_count, email, id) => {
-    console.log(title, location, image, judges, date, council, ticket_price, ticket_count, email, id)
     return db.query('UPDATE shows SET title = ?, location = ?, image = ?, judges = ?, date = ?, council = ?, ticket_price = ?, ticket_count = ?, email = ? WHERE id = ?', [title, location, image, judges, date, council, ticket_price, ticket_count, email, id])
 }
 

@@ -12,7 +12,7 @@ const validateToken = (req, res, next) => {
       // Use the received token and object and compare them with the orinigal key
     const validToken = verify(
       accessToken,
-      "10858bd0d580adf587b7459da186c56b7e96b75b00692eb03516d209f1fc45f9695f196de7734c7dcf8fe3172e2a99e38a3d0cd6f226a9a5d87d2aa45410a454"
+      process.env.JWT_TOKEN_SECRET
     );
     if (validToken) {
       return next();

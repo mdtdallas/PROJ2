@@ -18,11 +18,9 @@ function ipgetter() {
   db.query("SELECT ip FROM iplist"),
     function (error, results) {
       if (!results) {
-        console.log(error);
         return;
       } else {
         validIps.push(results);
-        console.log(validIps);
       }
     };
 }
@@ -99,7 +97,6 @@ server.use((req, res, next) => {
 // This will check for a pre existing session
 server.use((req, res, next) => {
   const userLoggedIn = req.session.user != null;
-  console.log(userLoggedIn)
   if (userLoggedIn) {
     logModel.addLog(
       req.ip,
@@ -141,7 +138,6 @@ const logController = require("./controllers/logController");
 server.use("/logs", logController);
 
 server.post("/allowIP", (req, res) => {
-  console.log(req.body);
   const { ip, access, email } = req.body;
   logModel.addAllowIP(ip, access, email);
   if (res.rowsAffected === 0) res.json({ error: "Failed!" });
@@ -157,11 +153,8 @@ server.post("/denyIP", (req, res) => {
 server.get("/logs", (req, res) => {
   logModel.getAllLogs().then((results) => {
     res.status(200).json(results);
-    console.log;
   });
 });
-
-
 
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, (err) => {

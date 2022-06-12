@@ -1,14 +1,16 @@
+require("dotenv").config();
+
 const mysql = require('mysql2');
 
 const connection = mysql.createPool({
-    // host: 'us-cdbr-east-05.cleardb.net',
-    // user: 'b4605adbab0adc',
-    // password: '547dfe70',
-    // database: 'heroku_3786788db311ecb'
-    host: 'localhost',
-    user: 'root',
+    host: process.env.DBHOST,
+    user: process.env.DBUSER,
+    password: process.env.DBPASS,
+    database: process.env.DBNAME
+    // host: 'localhost',
+    // user: 'root',
     // password: 'root',
-    database: 'cat_api'
+    // database: 'cat_api'
 });
 
 

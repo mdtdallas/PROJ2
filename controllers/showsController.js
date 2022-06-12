@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const validator = require("validator");
 const showsModel = require("../models/showsModel");
+const { validateToken } = require("./Auth");
 
-router.get("/shows", (req, res) => {
+router.get("/shows", validateToken, (req, res) => {
   showsModel
     .getAllShows()
     .then((results) => {
@@ -59,7 +60,6 @@ router.get("/showsCouncil/:council", (req, res) => {
 });
 
 router.post("/shows/create", (req, res) => {
-  console.log(req.body);
   const show = req.body;
   if (validator.isAscii(show.title) == false) {
     res.status(406).json({warning: "Show title is required"});
@@ -110,7 +110,6 @@ router.post("/shows/create", (req, res) => {
 });
 
 router.patch("/show/update", (req, res) => {
-  console.log(req.body)
   let show = req.body;
   if (validator.isAscii(show.title) == false) {
     res.status(406).json({warning: "Show title is required"});
