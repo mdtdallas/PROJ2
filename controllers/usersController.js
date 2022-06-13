@@ -163,6 +163,7 @@ router.post("/users/login", (req, res) => {
             email: user.email,
             userType: user.userType,
             name: user.name,
+            userID: user.id
           };
           const accessToken = jwt.sign(
             {
@@ -184,6 +185,7 @@ router.post("/users/login", (req, res) => {
             userType: user.userType,
             accessToken: accessToken,
             email: user.email,
+            userID: id
           });
         } else {
           res.status(418).json({ warning: "Im a teapot!" });

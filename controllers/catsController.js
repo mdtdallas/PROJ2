@@ -111,6 +111,7 @@ router.post("/catCreate/create", validateToken, (req, res) => {
 });
 
 router.patch("/catUpdate/update", validateToken, (req, res) => {
+  let dateTimeNow = new Date().toLocaleDateString("en-AU");
   let cat = req.body;
   if (validator.isAscii(cat.name) === false) {
     res.status(406).json({warning: "Please enter cat name"});
@@ -136,7 +137,8 @@ router.patch("/catUpdate/update", validateToken, (req, res) => {
       cat.image,
       validator.escape(cat.breeder),
       cat.email,
-      validator.escape(cat.id)
+      validator.escape(cat.id),
+      dateTimeNow
     )
     .then((results) => {
       if (results.affectedRows > 0) {

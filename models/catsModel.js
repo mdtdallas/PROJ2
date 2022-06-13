@@ -28,8 +28,8 @@ module.exports.createCat = (name, breed, age, image, breeder, email, dateTimeNow
     return db.query('INSERT INTO cats (name, breed, age, image, breeder, email, timestamp)' + 'VALUES (?, ?, ?, ?, ?, ?, ?)', [name, breed, age, image, breeder, email, dateTimeNow])
 }
 
-module.exports.updateCat = (name, breed, age, image, breeder, email, id) => {
-    return db.query('UPDATE cats SET name = ?, breed = ?, age = ?, image = ?, breeder = ?, email = ? WHERE id = ?', [name, breed, image, age, breeder, email, id])
+module.exports.updateCat = (name, breed, age, image, breeder, email, dateTimeNow, id) => {
+    return db.query('UPDATE cats SET name = ?, breed = ?, age = ?, image = ?, breeder = ?, email = ?, timestamp = ? WHERE id = ?', [name, breed, image, age, breeder, email, dateTimeNow, id])
 }
 
 module.exports.deleteCat = (id) => {
