@@ -111,7 +111,6 @@ router.post("/shows/create", (req, res) => {
 
 router.patch("/show/update", (req, res) => {
   let show = req.body;
-  console.log(show)
   if(show.ticket_price < 0) return res.json({warning: 'Price must be greater than 0'});
   if(show.ticket_count < 0) return res.json({warning: 'Amount of tickets must be greater than 0'});
   if (validator.isAscii(show.title) == false) {
