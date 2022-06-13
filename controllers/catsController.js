@@ -138,8 +138,8 @@ router.patch("/catUpdate/update", validateToken, (req, res) => {
       cat.image,
       validator.escape(cat.breeder),
       cat.email,
+      dateTimeNow,
       cat.id,
-      dateTimeNow
     )
     .then((results) => {
       if (results.affectedRows > 0) {
