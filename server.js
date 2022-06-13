@@ -7,9 +7,16 @@ require("dotenv").config();
 const slowDown = require("express-slow-down");
 const bodyParser = require("body-parser");
 const logModel = require("./models/logModel");
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 
-server.use(cors({ origin:  ["https://cat-admin-panel.netlify.app", "https://cat-ui.netlify.app"] }));
+server.use(
+  cors({
+    origin: [
+      "https://cat-admin-panel.netlify.app",
+      "https://cat-ui.netlify.app",
+    ],
+  })
+);
 
 // get IPs from the database push to new array
 // let validIps = ["::1"]; // Put your IP whitelist in this array
@@ -44,8 +51,7 @@ server.use(cors({ origin:  ["https://cat-admin-panel.netlify.app", "https://cat-
 //   }
 // });
 
-server.use(cookieParser())
-
+server.use(cookieParser());
 server.use(express.static("landing"));
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
@@ -53,15 +59,11 @@ server.use(bodyParser.json());
 
 server.use(
   session({
-    // secret: secret_key,
-    // resave: true,
-    // saveUninitialized: true,
-    // cookie: { secure: false },
-  secret: process.env.SESSION_TOKEN_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  key: 'cat-app_sid',
-  cookie: { secure: false }
+    secret: process.env.SESSION_TOKEN_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    key: "cat-app_sid",
+    cookie: { secure: false },
   })
 );
 
@@ -86,17 +88,6 @@ const limiter = rateLimit({
 });
 
 server.use(limiter);
-
-server.use((req, res, next) => {
-  let userLoggedIn = req.session.user != null;
-  if (userLoggedIn) {
-    console.log(req.session.user.email, req.session.user.userType)
-  } else {
-    console.log(`${req.ip} ${req.method} ${req.sessionID} ${req.url}`);
-    
-  }
-  next();
-});
 
 // Here if a user is logged in the middleware will use to either log the
 // users actions and if not logged in some actions are logged
