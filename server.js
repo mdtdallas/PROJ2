@@ -6,11 +6,10 @@ const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 const slowDown = require("express-slow-down");
 const bodyParser = require("body-parser");
-const db = require("./db");
 const logModel = require("./models/logModel");
 const cookieParser = require('cookie-parser');
 
-server.use(cors({ origin:  ["https://cat-admin-panel.netlify.app", "https://cat-ui.netlify.app/"] }));
+server.use(cors({ origin:  ["https://cat-admin-panel.netlify.app", "https://cat-ui.netlify.app"] }));
 
 // get IPs from the database push to new array
 // let validIps = ["::1"]; // Put your IP whitelist in this array
