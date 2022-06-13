@@ -114,7 +114,6 @@ router.post("/catCreate/create", validateToken, (req, res) => {
 router.patch("/catUpdate/update", validateToken, (req, res) => {
   let dateTimeNow = new Date().toLocaleDateString("en-AU");
   let cat = req.body;
-  console.log(cat)
   if (validator.isAscii(cat.name) === false) {
     res.status(406).json({warning: "Please enter cat name"});
     return;

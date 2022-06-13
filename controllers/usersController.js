@@ -144,7 +144,6 @@ router.delete("/userDelete/:id", validateToken, (req, res) => {
 
 router.post("/users/login", (req, res) => {
   let login = req.body;
-  console.log(login)
   if (validator.isAscii(login.email) === false) {
     res.status(406).json({ error: "Please enter email" });
     return;
