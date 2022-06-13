@@ -133,7 +133,9 @@ router.patch("/catUpdate/update", validateToken, (req, res) => {
       validator.escape(cat.name),
       validator.escape(cat.breed),
       validator.escape(cat.age),
+      cat.image,
       validator.escape(cat.breeder),
+      cat.email,
       validator.escape(cat.id)
     )
     .then((results) => {
