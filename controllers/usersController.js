@@ -9,19 +9,19 @@ const { validateToken } = require("./Auth");
 const logModel = require("../models/logModel");
 const jwt_secret = process.env.JWT_TOKEN_SECRET;
 
-router.get("/users", async (req, res) => {
+router.get("/users", validateToken, async (req, res) => {
   const results = await usersModel.getAllUsers();
   if(!results) res.json({error: 'No Users'});
   res.status(200).json({results, status: 'Users loaded'});
 });
 
-router.get('/user/:id', async (req, res) => {
+router.get('/user/:id', validateToken, async (req, res) => {
   const results = await usersModel.getUserById(req.params.id);
   if(!results) res.json({warning: 'User not found!'});
   res.json(results);
 })
 
-router.get("/users/:email", (req, res) => {
+router.get("/users/:email", validateToken, (req, res) => {
   usersModel
     .getUserByEmail(req.params.email)
     .then((results) => {
@@ -32,7 +32,7 @@ router.get("/users/:email", (req, res) => {
     });
 });
 
-router.get("/usersName/:name", (req, res) => {
+router.get("/usersName/:name", validateToken, (req, res) => {
   usersModel
     .getUserByName(req.params.name)
     .then((results) => {
@@ -43,7 +43,7 @@ router.get("/usersName/:name", (req, res) => {
     });
 });
 
-router.get("/usersPhone/:phone", (req, res) => {
+router.get("/usersPhone/:phone", validateToken, (req, res) => {
   usersModel
     .getUserByPhone(req.params.phone)
     .then((results) => {
@@ -90,7 +90,7 @@ router.post("/users/create", (req, res) => {
     });
 });
 
-router.post("/userUpdate", (req, res) => {
+router.post("/userUpdate", validateToken, (req, res) => {
   let user = req.body;
   if (validator.isAscii(user.email) === false) {
     res.status(406).json('Please enter email');
@@ -126,7 +126,7 @@ router.post("/userUpdate", (req, res) => {
     });
 });
 
-router.delete("/userDelete/:id", (req, res) => {
+router.delete("/userDelete/:id", validateToken, (req, res) => {
   const { id } = req.params;
   usersModel
     .deleteUser(id)

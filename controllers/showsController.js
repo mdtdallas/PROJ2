@@ -15,7 +15,7 @@ router.get("/shows", validateToken, (req, res) => {
     });
 });
 
-router.get("/showsShowID/:id", (req, res) => {
+router.get("/showsShowID/:id", validateToken, (req, res) => {
   showsModel
     .getShowByShowID(req.params.id)
     .then((results) => {
@@ -26,7 +26,7 @@ router.get("/showsShowID/:id", (req, res) => {
     });
 });
 
-router.get("/showsTitle/:title", (req, res) => {
+router.get("/showsTitle/:title", validateToken, (req, res) => {
   showsModel
     .getShowByTitle(req.params.title)
     .then((results) => {
@@ -37,7 +37,7 @@ router.get("/showsTitle/:title", (req, res) => {
     });
 });
 
-router.get("/showsDate/:date", (req, res) => {
+router.get("/showsDate/:date", validateToken, (req, res) => {
   showsModel
     .getShowByDate(req.params.date)
     .then((results) => {
@@ -48,7 +48,7 @@ router.get("/showsDate/:date", (req, res) => {
     });
 });
 
-router.get("/showsCouncil/:council", (req, res) => {
+router.get("/showsCouncil/:council", validateToken,(req, res) => {
   showsModel
     .getShowByCouncil(req.params.council)
     .then((results) => {
@@ -59,7 +59,7 @@ router.get("/showsCouncil/:council", (req, res) => {
     });
 });
 
-router.post("/shows/create", (req, res) => {
+router.post("/shows/create", validateToken, (req, res) => {
   const show = req.body;
   if (validator.isAscii(show.title) == false) {
     res.status(406).json({warning: "Show title is required"});
@@ -109,10 +109,8 @@ router.post("/shows/create", (req, res) => {
     });
 });
 
-router.patch("/show/update", (req, res) => {
+router.patch("/show/update", validateToken, (req, res) => {
   let show = req.body;
-  if(show.ticket_price < 0) return res.json({warning: 'Price must be greater than 0'});
-  if(show.ticket_count < 0) return res.json({warning: 'Amount of tickets must be greater than 0'});
   if (validator.isAscii(show.title) == false) {
     res.status(406).json({warning: "Show title is required"});
     return;
@@ -133,14 +131,8 @@ router.patch("/show/update", (req, res) => {
     res.status(406).json({warning: "Show council is required"});
     return;
   }
-  // if (validator.isEmpty(show.ticket_price)) {
-  //   res.status(406).json({warning: "Ticket price is required"});
-  //   return;
-  // }
-  // if (validator.isAscii(show.ticket_count)) {
-  //   res.status(406).json({warning: "Ticket amount is required"});
-  //   return;
-  // }
+  if(show.ticket_price < 0) return res.json({warning: 'Price must be greater than 0'});
+  if(show.ticket_count < 0) return res.json({warning: 'Amount of tickets must be greater than 0'});
   showsModel
     .updateShow(
       validator.escape(show.title),
@@ -166,7 +158,7 @@ router.patch("/show/update", (req, res) => {
     });
 });
 
-router.delete("/show/delete/:id", (req, res) => {
+router.delete("/show/delete/:id", validateToken, (req, res) => {
   let id = req.params.id;
   showsModel
     .deleteShow(id)

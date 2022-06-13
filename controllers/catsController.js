@@ -41,7 +41,7 @@ router.get("/catsEmail/:email", validateToken, (req, res) => {
     });
 });
 
-router.get("/catsBreed/:breed", (req, res) => {
+router.get("/catsBreed/:breed", validateToken, (req, res) => {
   let breed = req.params.breed;
   catsModel
     .getCatsByBreed(breed)
@@ -53,7 +53,7 @@ router.get("/catsBreed/:breed", (req, res) => {
     });
 });
 
-router.get("/catsAge/:age", (req, res) => {
+router.get("/catsAge/:age", validateToken, (req, res) => {
   let age = req.params.age;
   catsModel
     .getCatsByAge(age)
@@ -65,7 +65,7 @@ router.get("/catsAge/:age", (req, res) => {
     });
 });
 
-router.get("/catsBreeder/:breeder", (req, res) => {
+router.get("/catsBreeder/:breeder", validateToken, (req, res) => {
   let breeder = req.params.breeder;
   catsModel
     .getCatsByBreeder(breeder)

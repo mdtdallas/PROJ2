@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const entrantsModel = require("../models/entrantsModel");
+const { validateToken } = require("./Auth");
 
-router.get("/entrants", (req, res) => {
+router.get("/entrants", validateToken, (req, res) => {
   entrantsModel
     .getAllEntrants()
     .then((results) => {
@@ -13,7 +14,7 @@ router.get("/entrants", (req, res) => {
     });
 });
 
-router.get("/entrantsShowID/:showID", (req, res) => {
+router.get("/entrantsShowID/:showID", validateToken, (req, res) => {
   entrantsModel
     .getEntrantsByShow(req.params.showID)
     .then((results) => {
@@ -24,7 +25,7 @@ router.get("/entrantsShowID/:showID", (req, res) => {
     });
 });
 
-router.get("/entrant/:catID", (req, res) => {
+router.get("/entrant/:catID", validateToken, (req, res) => {
   entrantsModel
     .getEntrantBycatID(req.params.catID)
     .then((results) => {
@@ -35,7 +36,7 @@ router.get("/entrant/:catID", (req, res) => {
     });
 });
 
-router.get("/entrantEntID/:entrantID", (req, res) => {
+router.get("/entrantEntID/:entrantID", validateToken, (req, res) => {
   entrantsModel
     .getEntrantByEntrantID(req.params.entrantID)
     .then((results) => {
@@ -46,7 +47,7 @@ router.get("/entrantEntID/:entrantID", (req, res) => {
     });
 });
 
-router.post("/entrant/create", (req, res) => {
+router.post("/entrant/create", validateToken, (req, res) => {
   let entrant = req.body;
   entrantsModel
     .createEntrant(

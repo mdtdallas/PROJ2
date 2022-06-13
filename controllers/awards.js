@@ -4,7 +4,7 @@ const awardsModel = require("../models/awards");
 const { validateToken } = require("./Auth");
 
 
-router.get("/", (req, res) => {
+router.get("/", validateToken, (req, res) => {
   awardsModel
     .getAllAwards()
     .then((res) => res.json())
