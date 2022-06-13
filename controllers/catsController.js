@@ -114,6 +114,7 @@ router.post("/catCreate/create", validateToken, (req, res) => {
 router.patch("/catUpdate/update", validateToken, (req, res) => {
   let dateTimeNow = new Date().toLocaleDateString("en-AU");
   let cat = req.body;
+  console.log(cat)
   if (validator.isAscii(cat.name) === false) {
     res.status(406).json({warning: "Please enter cat name"});
     return;
@@ -143,7 +144,7 @@ router.patch("/catUpdate/update", validateToken, (req, res) => {
     )
     .then((results) => {
       if (results.affectedRows > 0) {
-        res.status(202).json({ status: `Cat ${cat.name} has been updated` });
+        res.status(202).json({ status: `Cat ${cat.name} has been updated`, results: results });
       } else {
         res.status(404).json({ warning: `Cat ${cat.id} not found`, results: results });
       }
