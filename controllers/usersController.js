@@ -186,7 +186,8 @@ router.post("/users/login", (req, res) => {
             userType: user.userType,
             accessToken: accessToken,
             email: user.email,
-            userID: user.id
+            userID: user.id,
+            username: user.name
           });
         } else {
           res.status(418).json({ warning: "Im a teapot!" });

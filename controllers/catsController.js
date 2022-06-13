@@ -79,7 +79,8 @@ router.get("/catsBreeder/:breeder", validateToken, (req, res) => {
 
 router.post("/catCreate/create", validateToken, (req, res) => {
   let cat = req.body;
-  let dateTimeNow = new Date().toISOString();
+  //let dateTimeNow = new Date().toISOString();
+  let dateTimeNow = new Date().toLocaleDateString("en-AU");
   if (validator.isAscii(cat.name) === false) {
     res.status(406).json({warning: "Please enter cat name"});
   }
@@ -144,7 +145,7 @@ router.patch("/catUpdate/update", validateToken, (req, res) => {
       if (results.affectedRows > 0) {
         res.status(202).json({ status: `Cat ${cat.name} has been updated` });
       } else {
-        res.status(404).json({ warning: `Cat ${cat.id} not found ${results}` });
+        res.status(404).json({ warning: `Cat ${cat.id} not found`, results: results });
       }
     })
     .catch((error) => {
