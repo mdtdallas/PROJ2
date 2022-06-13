@@ -111,6 +111,7 @@ router.post("/shows/create", (req, res) => {
 
 router.patch("/show/update", (req, res) => {
   let show = req.body;
+  if(show.ticket_price < 0) return res.json({warning: 'Price must be greater than 0'});
   if (validator.isAscii(show.title) == false) {
     res.status(406).json({warning: "Show title is required"});
     return;
@@ -131,11 +132,11 @@ router.patch("/show/update", (req, res) => {
     res.status(406).json({warning: "Show council is required"});
     return;
   }
-  if (validator.isNumeric(show.ticket_price) > 0) {
+  if (validator.isAscii(show.ticket_price)) {
     res.status(406).json({warning: "Ticket price is required"});
     return;
   }
-  if (validator.isNumeric(show.ticket_count) > 0) {
+  if (validator.isAscii(show.ticket_count) > 0) {
     res.status(406).json({warning: "Ticket amount is required"});
     return;
   }
