@@ -131,11 +131,11 @@ router.patch("/show/update", (req, res) => {
     res.status(406).json({warning: "Show council is required"});
     return;
   }
-  if (validator.isEmpty(show.ticket_price)) {
+  if (validator.IsPositiveInt(show.ticket_price)) {
     res.status(406).json({warning: "Ticket price is required"});
     return;
   }
-  if (validator.isEmpty(show.ticket_count)) {
+  if (validator.IsPositiveInt(show.ticket_count)) {
     res.status(406).json({warning: "Ticket amount is required"});
     return;
   }
