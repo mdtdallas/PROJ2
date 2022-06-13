@@ -89,6 +89,8 @@ router.post("/shows/create", validateToken, (req, res) => {
     res.status(406).json({warning: "Ticket amount is required"});
     return;
   }
+  if(show.ticket_price < 0) return res.json({warning: 'Price must be greater than 0'});
+  if(show.ticket_count < 0) return res.json({warning: 'Amount of tickets must be greater than 0'});
   showsModel
     .createShow(
       validator.escape(show.title),
