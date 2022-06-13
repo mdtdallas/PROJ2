@@ -138,10 +138,10 @@ router.patch("/show/update", (req, res) => {
   //   res.status(406).json({warning: "Ticket price is required"});
   //   return;
   // }
-  if (validator.isAscii(show.ticket_count)) {
-    res.status(406).json({warning: "Ticket amount is required"});
-    return;
-  }
+  // if (validator.isAscii(show.ticket_count)) {
+  //   res.status(406).json({warning: "Ticket amount is required"});
+  //   return;
+  // }
   showsModel
     .updateShow(
       validator.escape(show.title),
