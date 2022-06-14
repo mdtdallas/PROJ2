@@ -91,13 +91,14 @@ router.post("/shows/create", validateToken, (req, res) => {
   }
   if(show.ticket_price < 0) return res.json({warning: 'Price must be greater than 0'});
   if(show.ticket_count < 0) return res.json({warning: 'Amount of tickets must be greater than 0'});
+  let date = show.date.toLocaleDateString("en-AU");
   showsModel
     .createShow(
       validator.escape(show.title),
       validator.escape(show.location),
       show.photo,
       validator.escape(show.judges),
-      validator.escape(show.date),
+      validator.escape(date),
       show.council,
       validator.escape(show.ticket_price),
       validator.escape(show.ticket_count),
