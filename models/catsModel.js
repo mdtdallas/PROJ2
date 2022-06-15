@@ -29,7 +29,6 @@ module.exports.createCat = (name, breed, age, image, breeder, email, dateTimeNow
 }
 
 module.exports.updateCat = (name, breed, age, image, breeder, email, dateTimeNow, id) => {
-    console.log(name, breed, age, image, breeder, email, dateTimeNow, id)
     return db.query('UPDATE cats SET name = ?, breed = ?, age = ?, image = ?, breeder = ?, email = ?, timestamp = ? WHERE id = ?', [name, breed, age, image, breeder, email, dateTimeNow, id])
 }
 

@@ -98,7 +98,7 @@ router.post("/shows/create", validateToken, (req, res) => {
       show.photo,
       validator.escape(show.judges),
       validator.escape(show.date),
-      validator.escape(show.council),
+      show.council,
       validator.escape(show.ticket_price),
       validator.escape(show.ticket_count),
       show.email
@@ -142,7 +142,7 @@ router.patch("/show/update", validateToken, (req, res) => {
       show.image,
       validator.escape(show.judges),
       validator.escape(show.date),
-      validator.escape(show.council),
+      show.council,
       validator.escape(show.ticket_price),
       validator.escape(show.ticket_count),
       show.email,

@@ -15,6 +15,7 @@ server.use(
       "https://cat-admin-panel.netlify.app",
       "https://cat-ui.netlify.app",
     ],
+    credentials: true
   })
 );
 
